@@ -7,6 +7,8 @@ import com.omkar.user_api.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController()
 @RequestMapping("/users")
@@ -24,6 +26,10 @@ public class UserController {
     @PostMapping("/login")
     public BearerToken login(@RequestBody UserLogin userLogin){
         return userService.verify(userLogin);
+    }
+    @GetMapping("/get")
+    public List<Users> get(){
+        return userService.get();
     }
 
 }
