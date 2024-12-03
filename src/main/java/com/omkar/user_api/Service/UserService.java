@@ -7,6 +7,7 @@ import com.omkar.user_api.Model.UserLogin;
 import com.omkar.user_api.Model.Users;
 import com.omkar.user_api.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -40,7 +41,7 @@ public class UserService {
         try {
             Optional<Users> exist = userRepository.findById(user.getEmail());
             if(exist.isPresent()){
-                throw new UserAlreadyExistsException(user.getEmail() +" " +"Already Registered");
+                throw new UserAlreadyExistsException("Email already registered. Please use a different email");
             }
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
@@ -68,5 +69,13 @@ public class UserService {
 
     public List<Users> get() {
         return userRepository.findAll();
+    }
+
+    public void delete(String email) {
+        try {
+            userRepository.deleteById(email);
+        }catch (Exception e) {
+            throw new UserNotFoundException("No user with " + email);
+        }
     }
 }
