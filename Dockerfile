@@ -1,15 +1,25 @@
-# Use a lightweight JDK base image
+# Use an official OpenJDK runtime as a parent image
 FROM eclipse-temurin:17-jdk-alpine
 
-# Set a working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Add the JAR file (replace with your actual file name)
-COPY target/user-api-0.0.1-SNAPSHOT.jar app.jar
+# Copy the pom.xml and install dependencies first to take advantage of Docker cache
+COPY pom.xml .
 
-# Expose the application port
+# Install dependencies
+RUN mvn dependency:go-offline
+
+# Copy the source code
+COPY . .
+
+# Run the Maven build to create the .jar file
+RUN mvn clean package
+
+# Expose the port your app will run on
 EXPOSE 8080
 
-# Define the entry point
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+# Command to run the JAR file after it's built
+CMD ["java", "-jar", "target/user-api-0.0.1-SNAPSHOT.jar"]
+
 
