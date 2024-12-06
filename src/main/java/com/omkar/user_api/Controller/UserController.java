@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://omkarp7hy1rjscpfoqqb.drops.nxtwave.tech/")
+@CrossOrigin(origins = {"https://omkartrendz.ccbp.tech/","https://omkarsfasion.ccbp.tech/", "https://omkarp7hy1rjscpfoqqb.drops.nxtwave.tech/"})
 @RestController()
 @RequestMapping("/users")
 public class UserController {

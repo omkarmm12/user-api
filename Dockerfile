@@ -1,23 +1,15 @@
-# Use official OpenJDK base image
-FROM openjdk:17-jdk-slim as build
+# Use a lightweight JDK base image
+FROM eclipse-temurin:17-jdk-alpine
 
-# Set the working directory in the container
+# Set a working directory
 WORKDIR /app
 
-# Copy the pom.xml and install dependencies
-COPY pom.xml .
+# Add the JAR file (replace with your actual file name)
+COPY target/user-api-0.0.1-SNAPSHOT.jar app.jar
 
-# Download dependencies (use Maven wrapper or install Maven globally)
-RUN mvn dependency:go-offline
-
-# Copy the whole project
-COPY . .
-
-# Package the application into a JAR file
-RUN mvn clean package -DskipTests
-
-# Set the entry point to run the Spring Boot JAR file
-ENTRYPOINT ["java", "-jar", "/app/target/user-api.jar"]
-
-# Expose the port on which the app will run
+# Expose the application port
 EXPOSE 8080
+
+# Define the entry point
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+
