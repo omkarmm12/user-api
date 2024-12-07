@@ -7,13 +7,11 @@ import com.omkar.user_api.Model.UserLogin;
 import com.omkar.user_api.Model.Users;
 import com.omkar.user_api.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,9 +23,6 @@ public class UserService {
 
     @Autowired
     private AuthenticationManager authManager;
-
-    @Autowired
-    private static RestTemplate restTemplate;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
